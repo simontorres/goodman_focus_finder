@@ -296,18 +296,19 @@ class GoodmanFocus(object):
 
         if os.path.isdir(self.data_path):
             self.full_path = self.data_path
+            self.log.debug("Setting full path to: {}".format(self.full_path))
         else:
-            self.log.critical("No such directory")
+            self.log.critical("No such directory: {}".format(self.data_path))
             sys.exit(0)
 
     def __call__(self, files=None):
         if files is None:
             if not os.listdir(self.full_path):
-                self.log.critical("Directory is empty")
+                self.log.critical("Directory {} is empty".format(self.full_path))
                 sys.exit(0)
 
             elif not glob.glob(os.path.join(self.full_path, self.file_pattern)):
-                self.log.critical('Directory {} does not containe files '
+                self.log.critical('Directory {} does not contain files '
                                   'matching the pattern {}'
                                   ''.format(self.full_path, self.file_pattern))
                 sys.exit(0)
